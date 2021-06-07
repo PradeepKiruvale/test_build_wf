@@ -33,7 +33,7 @@ jobs:
             C8YTENANT: ${{secrets.SECRET_C8YTENANT}}
             C8YDEVICEID: ${{ secrets.SECRET_C8YDEVICEID }}
             TIMEZONE: 01:00
-            TEBASEDIR: /home/ubuntu/action-runner/_work/thin-edge.io/thin-edge.io/
+            TEBASEDIR: /home/ubuntu/action-runner/_work/test_build_wf/test_build_wf/
             EXAMPLEDIR: /home/ubuntu
 
     - name: upload results as zip
