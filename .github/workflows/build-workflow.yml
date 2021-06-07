@@ -88,12 +88,12 @@ jobs:
 
   build_armv7:
 
-    name: Build tedge and mapper Debian for armv7
+    name: Build tedge and mapper Debian for armv8
     runs-on: Ubuntu-20.04
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     env:
-      TARGET: armv7-unknown-linux-gnueabihf
+      TARGET: aarch64-unknown-linux-gnu
 
     steps:
 
