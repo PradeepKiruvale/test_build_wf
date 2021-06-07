@@ -49,7 +49,7 @@ class MonitoringWithSimulatedMessages(BaseTest):
         # to initialize. This is a heuristic measure.
         # Without an additional wait we observe failures in 1% of the test
         # runs.
-        time.sleep(0.1)
+        time.sleep(1)
 
         pub = self.startProcess(
             command=self.sudo,
