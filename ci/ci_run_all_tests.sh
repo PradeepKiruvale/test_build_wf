@@ -25,6 +25,6 @@ dpkg -s mosquitto-clients
 python3 -m venv ~/env-pysys
 source ~/env-pysys/bin/activate
 pip3 install -r tests/requirements.txt
-cd tests/PySys
+cd tests/PySys/monitoring
 pysys.py run
 deactivate
