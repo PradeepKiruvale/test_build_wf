@@ -20,6 +20,10 @@ Then we validate the  messages in the output of tedge sub,
 
 class MonitoringWithSimulatedMessages(BaseTest):
     def setup(self):
+        self.js_msg = ""
+        self.time_cnt = 0
+        self.temp_cnt = 0
+        self.pres_cnt = 0
         self.tedge = "/usr/bin/tedge"
         self.sudo = "/usr/bin/sudo"
 
@@ -49,16 +53,16 @@ class MonitoringWithSimulatedMessages(BaseTest):
         # to initialize. This is a heuristic measure.
         # Without an additional wait we observe failures in 1% of the test
         # runs.
-        time.sleep(1)
+        time.sleep(0.1)
 
-        pub = self.startProcess(
+        temp_pub = self.startProcess(
             command=self.sudo,
             arguments=[self.tedge, "mqtt", "pub",
                        "collectd/host/temperature/temp", "123435445:25.5"],
             stdouterr="tedge_temp",
         )
 
-        pub = self.startProcess(
+        pres_pub = self.startProcess(
             command=self.sudo,
             arguments=[self.tedge, "mqtt", "pub",
                        "collectd/host/pressure/pres", "12345678:500.5"],
@@ -98,10 +102,14 @@ class MonitoringWithSimulatedMessages(BaseTest):
                     reason = "pressure stat validation failed in message: " + \
                         str(line)
                     self.abort(False, reason)
-        return True
+        if self.time_cnt == 2 and self.temp_cnt == 1 and self.pres_cnt == 1:
+            return True
+        else:
+            return False
 
     def validate_time(self):
         if self.js_msg["time"]:
+            self.time_cnt += 1
             return True
         else:
             return False
@@ -109,6 +117,7 @@ class MonitoringWithSimulatedMessages(BaseTest):
     def validate_temperature(self):
         if self.js_msg["temperature"]:
             if "temp" in self.js_msg["temperature"]:
+                self.temp_cnt += 1
                 return True
             else:
                 return False
@@ -118,6 +127,7 @@ class MonitoringWithSimulatedMessages(BaseTest):
     def validate_pressure(self):
         if self.js_msg["pressure"]:
             if "pres" in self.js_msg["pressure"]:
+                self.pres_cnt += 1
                 return True
             else:
                 return False
