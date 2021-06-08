@@ -92,7 +92,7 @@ class MonitoringWithSimulatedMessages(BaseTest):
                 if not self.validate_temperature():
                     reason = "temperature stat validation failed in message: " + \
                       str(line)
-                   self.abort(False, reason)
+                    self.abort(False, reason)
             if "pressure" in self.js_msg:      
                 if not self.validate_pressure():
                     reason = "pressure stat validation failed in message: " + \
